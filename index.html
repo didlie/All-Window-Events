@@ -1,0 +1,87 @@
+<div class='eventContainer'>
+ Seconds : <div id='seconds'></div>
+</div>
+
+<!-- Script -->
+<script type='text/javascript'>
+
+ var count = 0;
+ var myInterval;
+ // Active
+ window.addEventListener('focus', startTimer);
+
+ // Inactive
+ window.addEventListener('blur', stopTimer);
+
+ function timerHandler() {
+  count++;
+  var num = count/10;
+  document.getElementById("seconds").innerHTML = num.toFixed(1);
+ }
+
+ // Start timer
+ function startTimer() {
+  console.log('focus');
+  count = 0;
+  myInterval = window.setInterval(timerHandler, 100);
+ }
+ startTimer();
+
+ // Stop timer
+ function stopTimer() {
+  window.clearInterval(myInterval);
+ }
+
+ var divRef = function(name){
+     var c = document.getElementById(name);
+     var container = document.getElementsByClassName("eventContainer")[0];
+     if(c) return c;
+     var d = document.createElement("div");
+     var h = document.createElement("span");
+     h.innerHTML = name + ":";
+     h.style.display = "none";
+     d.id = name;
+     d.style.display = "none"
+     container.appendChild(h);
+     container.appendChild(d);
+     return d;
+ }
+
+                            function displaySubListeners()
+
+ function getWindowEvents(){
+     var a = [];
+     for(var x in window){
+         // console.log(typeof x);
+         if(x.substring(0,2) === "on"){
+             a.push(x);
+         }else{
+
+         }
+     }
+     return a;
+ }
+
+ function watchWindowEvents(){
+     var events = getWindowEvents();
+     var div;
+     var n = [];
+     var i = 0;
+     var event_function;
+     events.forEach(function(name){
+         n[i] = name;
+         div = divRef(n[i]);
+         div.innerHTML = "0";
+         window[name] = function(){
+             var div = document.getElementById("on"+event.type);
+             var num = parseInt(div.innerHTML) + 1;
+             div.innerHTML = num;
+             div.style.display = "block";
+             div.previousSibling.style.display = "inline"
+             return false;
+         }
+         i++;
+     });
+ }
+ watchWindowEvents();
+</script>
